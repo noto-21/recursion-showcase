@@ -122,9 +122,33 @@ public class RecursionShowcase
 			rev = scan.nextLine();
 		}
 		
-		int revLength = rev.length() - 1;//Set necessary related values
+		int revLength = rev.length() - 1, maxIndex = 0, maxSize = matrix[maxIndex].size();//Set necessary related values
+
+		System.out.println("\n\n~OUTPUT~\n2D (Jagged) Array:");
+
+		for (int t = 0; t < matrix.length; t++)//Find ArrayList with largest size
+		{
+			if (matrix[t].size() > maxSize)
+			{
+				maxIndex = t;
+				maxSize = matrix[t].size();
+			}
+		}
+
+		for (int x = 0; x < matrix.length; x++)//Print 2D-Array
+		{
+			System.out.print("{");//Beginning brace
 		
-		System.out.print("\n\nRecursive 2D-Array Summation:\n\t--> " + recMatrixSum(matrix, numRow, numCol)
+			for (int y = 0; y < matrix[x].size(); y++)//Items
+				System.out.print(matrix[x].get(y) + " ");
+		
+			for (int z = matrix[x].size(); z < maxSize; z++)//Zeroes (if needed)
+				System.out.print("0 ");
+		
+			System.out.println("\b}");//Closing brace
+		}
+		
+		System.out.print("\nRecursive 2D-Array Summation:\n\t--> " + recMatrixSum(matrix, numRow, numCol)
 				+ "\n\nRecursive Product:\n\t--> " + recProduct(m1, m2)
 				+ "\n\nRecursively-Reversed String:\n\t--> " + recReverseString(rev, revLength));
 		
@@ -136,18 +160,16 @@ public class RecursionShowcase
 	public static int recMatrixSum(ArrayList<Integer>[] ints, int nR, int nC)
 	{
 		int sumOut = 0;
+
+		if (nR < 0 || ints[nR].isEmpty())//If there are no more rows to be counted, do nothing
+			return 0;
 		
-		if (nR < 0)//If no more rows, do nothing
-			sumOut += 0;
-		else//If there are still row indices to be counted
-		{
-			if (nC >= 0)//If there are still column indices to be counted
+		if (nC >= 0)//If there are still column indices to be counted
 				sumOut += (ints[nR].get(nC) + recMatrixSum(ints, nR, nC - 1));//Start @ last column in row and work backwards
 			else//If no more columns to be counted
 				if (nR - 1 >= 0)//If a previous row exists
 					sumOut += recMatrixSum(ints, nR - 1, ints[nR - 1].size() - 1);//Go to previous row and begin @ last column in the row
-		}
-		
+
 		return sumOut;
 	}
 	
