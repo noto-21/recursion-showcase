@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class RecursionShowcase
 {
 	/*---PSVM---*/
-	@SuppressWarnings("unchecked")//Ok
+	@SuppressWarnings("unchecked")//OK
 	public static void main(String[] args)
 	{
 		/*---Declarations---*/
@@ -17,6 +17,9 @@ public class RecursionShowcase
 		String rev = "";
 		
 		int intInputTemp1, intInputTemp2, m1, m2;
+		
+		boolean printWZeroes = false;
+		String printChoice;
 		
 		/*---Operations---*/
 		System.out.print("___RECURSION_SHOWCASE___\n\n~2D (JAGGED) ARRAY INSTANTIATION~\n");
@@ -42,7 +45,7 @@ public class RecursionShowcase
 		{
 		    matrix[a] = new ArrayList<Integer>();//Instantiate each row
 
-		    do //Check for bad input
+		    do//Check for bad input
 		    {
 		        System.out.print("# of elements in row " + (a + 1) + ": ");//Know how many columns to take input for per row 'a'
 		        while (!scan.hasNextInt()) 
@@ -60,7 +63,7 @@ public class RecursionShowcase
 
 		    for (int b = 0; b < intInputTemp1; b++)//Populate columns in row 'a'
 		    {
-		        do 
+		        do//Check for bad input
 		        {
 		            System.out.print("# in (" + (a + 1) + ", " + (b + 1) + "): ");
 		            while (!scan.hasNextInt())
@@ -81,6 +84,18 @@ public class RecursionShowcase
 		}
 		
 		int numRow = matrix.length - 1, numCol = matrix[numRow].size() - 1;//Set necessary related values
+		
+		System.out.print("\nPrint w/Zeroes? [Y/N]: ");
+		printChoice = scan.nextLine().toString().trim();
+		
+		while (printChoice.length() != 1 || !"YyNn".contains(printChoice))//Guard against bad input
+		{
+			System.out.print("\nINVALID INPUT!  Please input either [Y/N]: ");
+			printChoice = scan.nextLine().toString().trim();
+		}
+		
+		if (printChoice.equals("Y") || printChoice.equals("y"))
+			printWZeroes = true;
 		
 		System.out.print("\n\n~MULTIPLICAND + MULTIPLIER INSTANTIATION~\n");
 		do//Check for bad input
@@ -115,11 +130,11 @@ public class RecursionShowcase
         }while (m2 >= Integer.MAX_VALUE || m2 <= Integer.MIN_VALUE);
 		
 		System.out.print("\n\n~INPUT STRING-TO-BE-REVERSED~\nString: ");
-		rev = scan.nextLine();
+		rev = scan.nextLine().toString().trim();
 		while (rev.length() >= Integer.MAX_VALUE || rev.length() <= Integer.MIN_VALUE)//Check for bad input
 		{
 			System.out.print("\nINVALID INPUT!  Please enter a reasonable String: ");
-			rev = scan.nextLine();
+			rev = scan.nextLine().toString().trim();
 		}
 		
 		int revLength = rev.length() - 1, maxIndex = 0, maxSize = matrix[maxIndex].size();//Set necessary related values
@@ -140,27 +155,35 @@ public class RecursionShowcase
 			System.out.print("{");//Beginning brace
 		
 			for (int y = 0; y < matrix[x].size(); y++)//Items
-				System.out.print(matrix[x].get(y) + " ");
+			{
+				if (y != matrix[x].size() - 1)
+					System.out.print(matrix[x].get(y) + "\t");
+				else
+					System.out.print(matrix[x].get(y));
+			}
 		
-			for (int z = matrix[x].size(); z < maxSize; z++)//Zeroes (if needed)
-				System.out.print("0 ");
+			if (printWZeroes)//Zeroes (if needed)
+				for (int z = matrix[x].size(); z < maxSize; z++)
+					System.out.print("\t0");
 		
-			System.out.println("\b}");//Closing brace
+			System.out.println("}");//Closing brace
 		}
 		
+		/*---Final Output---*/
 		System.out.print("\nRecursive 2D-Array Summation:\n\t--> " + recMatrixSum(matrix, numRow, numCol)
 				+ "\n\nRecursive Product:\n\t--> " + recProduct(m1, m2)
 				+ "\n\nRecursively-Reversed String:\n\t--> " + recReverseString(rev, revLength));
 		
+		/*---Closing Operations---*/
 		scan.close();//Close Scanner
 	}
 
 	/*---Methods---*/
 	//Iterates through each row/column and sums values @ indices; begins @ last column of last row
 	public static int recMatrixSum(ArrayList<Integer>[] ints, int nR, int nC)
-	{
-		int sumOut = 0;
-
+	{	    
+	    int sumOut = 0;
+	    
 		if (nR < 0 || ints[nR].isEmpty())//If there are no more rows to be counted, do nothing
 			return 0;
 		
