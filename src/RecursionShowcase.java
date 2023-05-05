@@ -19,7 +19,7 @@ public class RecursionShowcase
 		int intInputTemp1, intInputTemp2, m1, m2;
 		
 		boolean printWZeroes = false;
-		String printChoice;
+		char[] printChoice;
 		
 		/*---Operations---*/
 		System.out.print("___RECURSION_SHOWCASE___\n\n~2D (JAGGED) ARRAY INSTANTIATION~\n");
@@ -86,15 +86,15 @@ public class RecursionShowcase
 		int numRow = matrix.length - 1, numCol = matrix[numRow].size() - 1;//Set necessary related values
 		
 		System.out.print("\nPrint w/Zeroes? [Y/N]: ");
-		printChoice = scan.nextLine().toString().trim();
+		printChoice = scan.nextLine().toString().trim().toCharArray();
 		
-		while (printChoice.length() != 1 || !"YyNn".contains(printChoice))//Guard against bad input
+		while (printChoice.length != 1 || (printChoice[0] != 'Y' && printChoice[0] != 'y' && printChoice[0] != 'N' && printChoice[0] != 'n'))//Guard against bad input
 		{
 			System.out.print("\nINVALID INPUT!  Please input either [Y/N]: ");
-			printChoice = scan.nextLine().toString().trim();
+			printChoice = scan.nextLine().toString().trim().toCharArray();
 		}
 		
-		if (printChoice.equals("Y") || printChoice.equals("y"))
+		if (printChoice[0] == 'Y' || printChoice[0] == 'y')
 			printWZeroes = true;
 		
 		System.out.print("\n\n~MULTIPLICAND + MULTIPLIER INSTANTIATION~\n");
