@@ -165,10 +165,10 @@ public class RecursionShowcase
 			return 0;
 		
 		if (nC >= 0)//If there are still column indices to be counted
-				sumOut += (ints[nR].get(nC) + recMatrixSum(ints, nR, nC - 1));//Start @ last column in row and work backwards
-			else//If no more columns to be counted
-				if (nR - 1 >= 0)//If a previous row exists
-					sumOut += recMatrixSum(ints, nR - 1, ints[nR - 1].size() - 1);//Go to previous row and begin @ last column in the row
+			sumOut += (ints[nR].get(nC) + recMatrixSum(ints, nR, nC - 1));//Start @ last column in row and work backwards
+		else//If no more columns to be counted
+			if (nR - 1 >= 0)//If a previous row exists
+				sumOut += recMatrixSum(ints, nR - 1, ints[nR - 1].size() - 1);//Go to previous row and begin @ last column in the row
 
 		return sumOut;
 	}
