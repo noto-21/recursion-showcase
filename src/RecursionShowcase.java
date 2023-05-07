@@ -207,7 +207,10 @@ public class RecursionShowcase
 	//final char in string is reached
 	public static String recReverseString(String rS, int rSL)
 	{
-		String revOut = "";
-		return revOut += (rSL >= 0) ? (rS.charAt(rSL) + recReverseString(rS, rSL - 1)) : "";
+		StringBuilder revOut = new StringBuilder();
+		if (rSL >= 0) 
+        revOut.append(rS.charAt(rSL) + recReverseString(rS, rSL - 1));
+		
+		return revOut.toString();
 	}
 }
