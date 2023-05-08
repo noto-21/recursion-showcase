@@ -199,8 +199,12 @@ public class RecursionShowcase
 	//Determines product of a multiplicand and a multiplier based on their inherent values, via recursive summation
 	public static int recProduct(int m, int n)
 	{
-		int prodOut = 0;
-		return prodOut -= (n < 0) ? (m - recProduct(m, n + 1)) : (n > 0) ? -(m + recProduct(m, n - 1)) : 0;
+		if (n < 0)
+			return -recProduct(m, -n);
+		else if (n > 0)
+			return m + recProduct(m, n - 1);
+		else
+			return 0;
 	}
 	
 	//Reverses string by printing char @ last index first; sends next-last index to next recursive call until
@@ -208,8 +212,9 @@ public class RecursionShowcase
 	public static String recReverseString(String rS, int rSL)
 	{
 		StringBuilder revOut = new StringBuilder();
+		
 		if (rSL >= 0) 
-        revOut.append(rS.charAt(rSL) + recReverseString(rS, rSL - 1));
+        	revOut.append(rS.charAt(rSL) + recReverseString(rS, rSL - 1));
 		
 		return revOut.toString();
 	}
